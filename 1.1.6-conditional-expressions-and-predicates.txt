@@ -1,0 +1,47 @@
+Now we're getting into case analysis.
+
+We're bring in cond.
+
+(cond (<p1> <e1>)
+      (<p2> <e2>)
+      
+      (<pn> <en>))
+
+(<p> <e>) are clauses.
+
+The <p> is the predicate - the expression that is either true or false.
+
+(define (abs x)
+  (cond ((> x 0) x)
+        ((= x 0) 0)
+        ((< x 0) (- x))))
+
+Clauses are evaluated in order until one is found true, then it returns the relevant expression.
+
+If none are true, cond is undefined.
+
+Predicate is used for expressions that return true or false, or expressions that evaluate to such.
+
+You can also do this:
+(define (abs x)
+  (cond ((< x 0) (- x))
+        (else x)))
+
+else is special. it's a catch all.
+
+or this 
+(define (abs x)
+  (if (< x 0)
+      (- x)
+      x))
+
+if is also special. used specifically if there are only two cases.
+
+There are also "and" "or" and "not".
+
+Logic expressions are evalauted left to rig
+
+(and <e1> ... <en>)
+(or <e1> ... <en>)
+(not <e>)
+

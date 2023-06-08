@@ -1,0 +1,402 @@
+Exercise 1.1.  Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
+
+10 -> 10
+(+ 5 3 4) -> 12
+(- 9 1) -> 8
+(/ 6 2) -> 3
+(+ (* 2 4) (- 4 6)) -> 6
+(define a 3) -> a
+(define b (+ a 1)) -> b
+(+ a b (* a b)) -> 12 + 3 + 4 -> 19
+(= a b) false
+(if (and (> b a) (< b (* a b)))
+    b
+    a) -> if both expressions true, then b, else a.  b is greater than a, true. b is less than 12, true. should return b.
+(cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (else 25)) -> should return the second expression, which evaluates to 16
+(+ 2 (if (> b a) b a)) -> b is greater than a, true. return b. 6.
+(* (cond ((> a b) a)
+         ((< a b) b)
+         (else -1))
+   (+ a 1)) -> a is less than b, return b. 4 * 4. 16.
+
+boom boom baby.
+
+
+1 ]=> (+ (* 2 4) (- 4 6))
+
+;Value: 6
+
+1 ]=> (define a 3)
+
+;Value: a
+
+1 ]=> a
+
+;Value: 3
+
+1 ]=> (define b (+ a 1))
+
+;Value: b
+
+1 ]=> b
+
+;Value: 4
+
+1 ]=> (+ a b (* a b))
+
+;Value: 19
+
+1 ]=> (= a b)
+
+;Value: #f
+
+1 ]=> (< a b)
+
+;Value: #t
+
+1 ]=> (if (and (> b a) (< b (* a b)))
+    b
+    a)
+
+;Value: 4
+
+1 ]=> (if (and (> b a) (< b (* a b)))
+    b
+    a)
+
+;Value: 4
+
+1 ]=> (cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (else 25))
+
+;Value: 16
+
+1 ]=> (+ 2 (if (> b a) b a))
+
+;Value: 6
+
+1 ]=> (* (cond ((> a b) a)
+         ((< a b) b)
+         (else -1))
+   (+ a 1))
+
+;Value: 16
+
+1 ]=> 
+
+Exercise 1.2.  Translate the following expression into prefix form
+
+(5 + 4 + (2 - (3 - (6 + 4/5)))) / (3 (6 - 2)(2-7))
+
+(
+    /
+    (
+        +
+        5
+        4
+        (
+            -
+            2
+            (
+                -
+                3
+                (
+                    +
+                    6
+                    (
+                        /
+                        4
+                        5
+                    )
+                )
+            )
+        )
+    )
+    (
+        *
+        3
+        (- 6 2)
+        (- 2 7)
+    )
+)
+
+
+
+(     
+    /
+    (
+        +
+        5
+        4
+        (
+            -
+            2
+            (
+                -
+                3
+                (
+                    +
+                    6
+                    (
+                        /
+                        4
+                        5
+                    )
+                )
+            )
+        )
+    )
+    (
+        *
+        3
+        (- 6 2)
+        (- 2 7)
+    )
+)
+
+;Value: -37/150
+
+1 ]=> 
+
+Exercise 1.3.  Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
+
+(define (square x) (* x x))
+
+(define (square-sum x y) (+ (square x) (square y)))
+
+Okay so we have to brute force this.
+(
+    define 
+    ex-1-3 
+    (x y z) 
+    (
+        // clearly a conditional
+        cond 
+        // condition where it's x and y
+        (
+            (
+                and
+                (
+                    <=
+                    z
+                    y
+                )
+                (
+                    <=
+                    z
+                    x
+                )
+            )
+            (square-sum x y)
+        )
+        // condition where it's x and z
+        (
+            (
+                and
+                and
+                (
+                    <=
+                    y
+                    z
+                )
+                (
+                    <=
+                    y
+                    x
+                )
+            )
+            (square-sum x z)
+        )
+        // condition where it's y and z
+        (else (square-sum y z))
+    )
+)
+
+(
+    define 
+    (ex-1-3 x y z)
+    (
+        cond 
+        (
+            (
+                and
+                (
+                    <=
+                    z
+                    y
+                )
+                (
+                    <=
+                    z
+                    x
+                )
+            )
+            (square-sum x y)
+        )
+        (
+            (
+                and
+                (
+                    <=
+                    y
+                    z
+                )
+                (
+                    <=
+                    y
+                    x
+                )
+            )
+            (square-sum x z)
+        )
+        (
+            else 
+            (square-sum y z)
+        )
+    )
+)
+
+1 ]=> (define (square x) (* x x))
+
+;Value: square
+
+1 ]=> (define (square-sum x y) (+ (square x) (square y)))
+
+;Value: square-sum
+
+1 ]=> (
+    define 
+    (ex-1-3 x y z)
+    (
+        cond 
+        (
+            (
+                and
+                (
+                    <=
+                    z
+                    y
+                )
+                (
+                    <=
+                    z
+                    x
+                )
+            )
+            (square-sum x y)
+        )
+        (
+            (
+                and
+                (
+                    <=
+                    y
+                    z
+                )
+                (
+                    <=
+                    y
+                    x
+                )
+            )
+            (square-sum x z)
+        )
+        (
+            else 
+            (square-sum y z)
+        )
+    )
+)
+
+
+;Value: ex-1-3
+
+1 ]=> (ex-1-3 1 2 3)
+
+;Value: 13
+
+1 ]=> (ex-1-3 1 1 1)
+
+;Value: 2
+
+1 ]=> (ex-1-3 1 2 2)
+
+;Value: 8
+
+1 ]=> (ex-1-3 1 1 2)
+
+;Value: 5
+
+1 ]=> (ex-1-3 1 4 3)
+
+;Value: 25
+
+1 ]=> 
+
+lets fucking gooooooooo
+
+Exercise 1.4.  Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
+
+(define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b))
+
+Oh this is interesting. So it's passing along the procedure to be evaluated?
+
+If that's the case, then it's saying if b is greater than 0, add a and b, otherwise subtract b from a.
+
+is that right?
+
+yep
+
+1 ]=> (define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b))
+
+;Value: a-plus-abs-b
+
+1 ]=> (a-plus-abs-b 4 1)
+
+;Value: 5
+
+1 ]=> (a-plus-abs-b -5 1)
+
+;Value: -4
+
+1 ]=> (a-plus-abs-b 5 -10)
+
+;Value: 15
+
+1 ]=> 
+
+Exercise 1.5.  Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:
+
+(define (p) (p))
+
+(define (test x y)
+  (if (= x 0)
+      0
+      y))
+
+Then he evaluates the expression
+
+(test 0 (p))
+
+What behavior will Ben observe with an interpreter that uses applicative-order evaluation? What behavior will he observe with an interpreter that uses normal-order evaluation? Explain your answer. (Assume that the evaluation rule for the special form if is the same whether the interpreter is using normal or applicative order: The predicate expression is evaluated first, and the result determines whether to evaluate the consequent or the alternative expression.)
+
+So p is a procedure that calls p.
+
+Test is a procedure that says if x is 0, return 0, otherwise return y.
+
+he calls test with 0 and p.
+
+so. normal order stuff expands and then reduces down.  It doesn't evaluate P until it's fully expanded.  Since P calls itself infinitely, that's means it evaluates to 0 before infinitely looping with p?
+
+But in applicative order it would infinitely recurse?
+
+website confirms yes.
+
+
+
+

@@ -1,0 +1,10 @@
+Substitution model.
+
+A model that determines the "meaning" of procedure application.
+
+The book walks through an example of breaking down procedure f into a tree, then evaluating the tree leaf by leaf and walking back to the value.  It calls this normal-order evaluation.
+
+Normal order evaluation is "fully expand and then reduce"
+
+Lisp uses applicative order evaluation.  This is "evaluate the arguments and then apply".
+

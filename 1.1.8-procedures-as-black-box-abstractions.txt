@@ -1,0 +1,32 @@
+You can define procedures in the scope of another procedure.
+
+(define (sqrt x)
+  (define (good-enough? guess x)
+    (< (abs (- (square guess) x)) 0.001))
+  (define (improve guess x)
+    (average guess (/ x guess)))
+  (define (sqrt-iter guess x)
+    (if (good-enough? guess x)
+        guess
+        (sqrt-iter (improve guess x) x)))
+  (sqrt-iter 1.0 x))
+
+In this, good-enough, improve and sqrt-iter are all subprocedures of the procedure sqrt.
+
+You can take this a step further, because x is actually in the lexical scope of sqrt, so it can be used by anywhere below it.
+
+(define (sqrt x)
+  (define (good-enough? guess)
+    (< (abs (- (square guess) x)) 0.001))
+  (define (improve guess)
+    (average guess (/ x guess)))
+  (define (sqrt-iter guess)
+    (if (good-enough? guess)
+        guess
+        (sqrt-iter (improve guess))))
+  (sqrt-iter 1.0))
+
+my brain really fucking hurts.
+
+this is pretty standard programming stuff, but it's hard to see through the structure of this haha.
+
