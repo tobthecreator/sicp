@@ -1,0 +1,62 @@
+starting to define functions, but we're calling them procedures in the lingo of this book.
+
+(define (<name> <formal parameters>) <body>)
+
+name - the function / procedure name
+formal parameters - the args used within the body locally
+body - the expression or compounded expressions that execute and will yield a value
+
+1 ]=> (define (square x) (* x x))
+
+;Value: square
+
+1 ]=> square 11
+
+;Value: #[compound-procedure 12 square]
+
+1 ]=> 
+;Value: 11
+
+1 ]=> (square 11)
+
+;Value: 121
+
+1 ]=> (square (+ 11 5))
+
+;Value: 256
+
+1 ]=> (square (square 2))    
+
+;Value: 16
+
+1 ]=> (+ (square 2) (square 4))
+
+;Value: 20
+
+1 ]=> (define (sum-of-squares x y) (+ (square x) (square y)))
+
+;Value: sum-of-squares
+
+1 ]=> sum-of-squares
+
+;Value: #[compound-procedure 13 sum-of-squares]
+
+1 ]=> (sum-of-squares 4 4)
+
+;Value: 32
+
+1 ]=> (sum-of-squares 5 4)
+
+;Value: 41
+
+1 ]=> (define (f a) (sum-of-squares (+ a 1) (* a 2)))
+
+;Value: f
+
+1 ]=> (f 5)
+
+;Value: 136
+
+1 ]=> 
+
+Pretty cool

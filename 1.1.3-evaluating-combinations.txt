@@ -1,0 +1,26 @@
+It walks through how a tree of combinations for the simpler expressions are built.
+
+Definitions are called out as an exception - a special from.  It does not combine other expressions, it is an exception at associates a value with a variable.
+
+(* (+ 2 (* 4 6))
+   (+ 3 5 7))
+
+
+;Value: 390
+
+1 ]=> 
+
+This is a tree of:
+
+Value = 
+--> *
+--> +
+----|--> 2
+----|--> *
+----|----|--> 4
+----|----|--> 6
+--> +
+----|--> 3
+----|--> 5
+----|--> 7
+
