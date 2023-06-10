@@ -1,0 +1,36 @@
+Being able to pass a function to evaluate
+gives us a lot of expressive power.
+
+But being able to return procedures enhances that further.
+
+this book sure loves math.
+
+(define (average-damp f)
+  (lambda (x) (average x (f x))))
+
+This procedure takes a procedure as an argument.
+
+It returns a lamda procedure that averages x and f(x) together.
+
+You can call it then with
+
+((average-damp square) 10)
+
+They've also basically started sneaking in functions as variables in the last chapter
+
+(define dx 0.00001)
+
+(define (deriv g)
+  (lambda (x)
+    (/ (- (g (+ x dx)) (g x))
+       dx)))
+
+As programmers, we should be alert to opportunities to identify the underlying abstractions in our programs and to build upon them and generalize them to create more powerful abstractions. This is not to say that one should always write programs in the most abstract way possible; expert programmers know how to choose the level of abstraction appropriate to their task. But it is important to be able to think in terms of these abstractions, so that we can be ready to apply them in new contexts. The significance of higher-order procedures is that they enable us to represent these abstractions explicitly as elements in our programming language, so that they can be handled just like other computational elements.
+
+In general, programming languages impose restrictions on the ways in which computational elements can be manipulated. Elements with the fewest restrictions are said to have first-class status. Some of the ``rights and privileges'' of first-class elements are:64
+
+They may be named by variables.
+They may be passed as arguments to procedures.
+They may be returned as the results of procedures.
+They may be included in data structures.65
+Lisp, unlike other common programming languages, awards procedures full first-class status. This poses challenges for efficient implementation, but the resulting gain in expressive power is enormous

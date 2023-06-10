@@ -1,0 +1,158 @@
+Lambda functions are small functions with no name that run immediately.
+
+They allow us to encapuslate behavior without having to define a full function.
+
+lambda works the same was as define with no name
+
+(lambda (<formal-parameters>) <body>)
+
+Lambda also lets us create local variables.
+
+(
+    define 
+    (f x y)
+    (
+        define 
+        (f-helper a b)
+        (
+            + (* x (square a))
+            (* y b)
+            (* a b)
+        )
+    )
+    (
+        f-helper 
+            (+ 1 (* x y)) 
+            (- 1 y)
+    )
+)
+
+all of that vs
+
+(
+    define 
+    (f x y)
+    (
+        (
+            lambda (a b)
+            (+ 
+                (* x (square a))
+                (* y b)
+                (* a b)
+            )
+        )
+        (+ 1 (* x y))
+        (- 1 y)
+   )
+)
+
+Having local variables was interesting, so they expanded it into a formal system.
+
+(let ((<var1> <exp1>)
+      (<var2> <exp2>)
+      
+      (<varn> <expn>))
+   <body>)
+
+
+let	<var1> have the value <exp1> and
+<var2> have the value <exp2> and
+
+<varn> have the value <expn>
+in	<body>
+
+So you basically end up wrapping a bunch of variable delcarations and then the body they apply to.
+
+(
+    define
+    (f x y)
+    (
+        let (
+            (
+                (a (+ 1 (* x y)))
+                (b (- 1 y))
+            )
+            (
+                + 
+                (* x (square a))
+                (* y b)
+                (* a b)
+            )
+        )
+    )
+)
+
+Let is basically a wrapper for lambda.  You can interpret it as:
+
+((lambda (<var1> ...<varn>)
+    <body>)
+ <exp1>
+ 
+ <expn>)
+
+ let me try all this on my own.
+
+ (
+    define 
+        (f x y) 
+        (
+            +
+            (+ 4 x)
+            (* 2 y)
+        )
+ )
+
+ (
+    define 
+        (f2 x y) 
+        (
+            +
+            (lambda (x) (+ 4 x))
+            (* 2 y)
+        )
+ )
+
+ I keep getting this 
+;The object #[compound-procedure 14], passed as the first argument to integer-add, is not the correct type.
+;To continue, call RESTART with an option number:
+; (RESTART 3) => Specify an argument to use in its place.
+; (RESTART 2) => Return to read-eval-print level 2.
+; (RESTART 1) => Return to read-eval-print level 1.
+
+(
+    define 
+        (f3 x y) 
+        (
+            +
+            ((lambda (x) (+ 4 x)) x)
+            (* 2 y)
+        )
+ )
+
+ahh there we go
+
+you have to pass the variable down to the lambda
+
+That starts to make a bit more sense with the let stuff.
+
+Okay so let's try that.
+
+(
+    define
+    (f4 x y)
+    (
+        let (
+            (a (+ 4 x))
+            (b (* 2 y))
+        )
+        (
+            +
+            a
+            b
+        )
+    )
+)
+
+lets goooo
+
+okay feeling good

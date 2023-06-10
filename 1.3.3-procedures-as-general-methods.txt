@@ -1,0 +1,9 @@
+We brought in procedures to abstract patterns for operations to make them independent of variables involved.
+
+But then we found many repeating patterns in our procedures, so we brought in higher-order-procedures
+
+No we have procedures that express general methods of computation,
+independent of the procedures they're operating.
+
+Some very complicated examples follow that I don't feel like dissecting.
+
