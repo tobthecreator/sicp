@@ -1,0 +1,90 @@
+
+n! = n * (n - 1) * (n - 2) ... 3 * 2 * 1
+
+we can break that down into
+
+n! = n * (n - 1)!
+
+(n - 1)! is a repating part of the problem.
+
+(define (factorial n)
+    (
+        if (= n 1) 
+            1
+            (* n (factorial (- n 1)))
+    )
+    
+)
+
+product <- counter * product
+counter <- counter + 1
+
+(
+    define (factorial n)
+    (fact-iter 1 1 n)
+)
+
+(
+    define (fact-iter product counter max-count)
+    (
+        if (> counter max-count)
+            product
+            (
+                fact-iter 
+                    (* counter product)
+                    (+ counter 1)
+                    max-count
+            )
+    )
+)
+
+"But when we describe a process as following a pattern that is, say, linearly recursive, we are speaking about how the process evolves, not about the syntax of how a procedure is written"
+
+"It may seem disturbing that we refer to a recursive procedure such as fact-iter as generating an iterative process. However, the process really is iterative: Its state is captured completely by its three state variables, and an interpreter need keep track of only three variables in order to execute the process."
+
+yeah that's still fucking with me. let me break that down a bit more.
+
+Maybe the key is the word shape.
+
+In the recursive version, we have no state.  So every time we want to add another layer to the computation, we expand the process in memory.  Another iteration of the function is be locked in.  
+
+It has to call the rec function as many times as n, so the size of the process grows linearly.
+
+But the operations are deferred. That's the key.  It's building a big tree of operations that it'll execute once it's found the leaves.
+
+I think the trick is that the iterative process doesn't have state in the way I'm used to thinking about it.
+
+It doesn't have some variable that is declared and then iterated over with some for loop.  It's still a recursive procedure, but it's not a recursive process.
+
+At each step it is returning another function to evaluate, and the function knows the whole state of the problem.  And that's becauses the args hold the state.
+
+So in the first one.
+
+rec_fact 4
+ --> 4 * rec_fact 3
+ --|--> 3 * rec_fact 2
+ --|--|--> 2 * rec_fact 1
+ --|--|--|--> 1
+
+ The reason it expands the process size linearlly is because it needs to open up a new copy of rec_fact in memory to fulfill the previous stage.
+
+ But in the second one
+
+ lin_fact 1 1 4
+ --> lin_fact 4 2 4
+ --> lin_fact 8 3 4
+ --> lin_fact 24 4 4
+
+ It completes an opeation, and returns the next operation with the complete state of what needs to be done.  
+
+ When the first operation finishes, it loads up a new copy of that operation in memory with the complete state.
+
+ So it still takes n runs of hte function to calculate, but the process stays the same shape.
+
+ 
+
+
+
+
+
+

@@ -1,0 +1,202 @@
+Alright walking through fib.
+
+Fib(n)
+-> if n=0, 0
+-> if n=1, 1
+-> else, Fib(n-1) + Fib(n-2)
+
+let me take a stab at writing that without the book
+
+(
+    define (tyler-fib n)
+    (
+        cond
+            ((= n 0) 0)
+            ((= n 1) 1)
+            (
+                else 
+                (+ (tyler-fib (- n 1)) (tyler-fib (- n 2)))
+            )
+    )
+)
+
+nailed it, validated against wolfram.
+
+This builds out a tree of nodes
+
+In general, 
+the # of steps required for a tree will be the number of nodes in the tree.
+the space required is the depth of the tree.
+
+Okay, lemme make sure I've grokked that.
+
+Took a short walk and thought about it.
+
+It's a little more complicated because you have multiple nodes than the previous iterative process, but it makes sense.
+
+It's obvious you're going to have to run the function n times if you have n nodes.
+
+so the process steps will grow by some factor of n, depending on many nodes each 
+layer of the tree adds.
+
+BUT, when evaluating a bunch of leaves, you're doing so in a sequence.  And if it's the same function every time, then you're using that same spot in memory for that new process.
+
+Each layer of the tree funtionally only grows by one spot in memory for the procudure.  
+
+So it's space expands linearly.  While the steps expands non-linearly.
+
+(fib 3)
+--> (+ (fib 2) (fib 1))
+--|--> (+ (fib 1) (fib 0))
+
+
+It's  not exactly something as clean as n^2 for steps growth. but clearly nonlinear
+
+for fib 3 there are 5 evaluations.
+for fib 5 there are 15.
+
+so let's write an iterative one.
+
+we know that every single time the state of the next calls will be based on the state of the current calls.
+
+we know that we're summing as we go.
+
+when we did this before, we did it by flipping the problem on it's head.
+
+Instead of calculating factorial as a big game of subtraction, we treated it as a summation.
+
+that allowed us to keep track of state along the way as we marched through a definitive process with a clear endpoint
+
+Going to try and do this without looking at the book.
+
+Fib(n)
+-> if n=0, 0
+-> if n=1, 1
+-> else, Fib(n-1) + Fib(n-2)
+
+So eventually everything gets back down to 0 and 1.
+
+Everything else is us subtracting out way to 0 and 1.
+
+So we're going to try and build our way up from the bottom.
+
+We know that there is n depth to the tree.
+
+i'm stuck on the book's 
+
+a <- a + b
+b <- a
+
+bit
+
+fib(3)
+
+1 0
+
+1 1
+
+2 1
+
+3 2
+
+
+
+1 + 1 + 1 + 1 + 2 = 6
+
+
+(
+    define 
+    (tyler-fib-iter a b count)
+    (
+        
+    )
+)
+
+okay from the book
+
+(define (fib n)
+  (fib-iter 1 0 n))
+
+(define (fib-iter a b count)
+  (if (= count 0)
+      b
+      (fib-iter (+ a b) a (- count 1))))
+
+fib (3) = (fib-iter 1 0 3)
+
+(fib-iter 1 0 3) // repeat the process n times starting from 1 and 0
+--> (fib-iter 1 1 2)
+--|--> (fib-iter 2 1 1)
+--|--|--> (fib-iter 3 2 0)
+--|--|--|--> 2
+
+okay maybe i'm just dumb
+
+1 ]=> (
+    define (tyler-fib n)
+    (
+        cond
+            ((= n 0) 0)
+            ((= n 1) 1)
+            (
+                else 
+                (+ (tyler-fib (- n 1)) (tyler-fib (- n 2)))
+            )
+    )
+)
+
+;Value: tyler-fib
+
+1 ]=> (tyler-fib 5)
+
+;Value: 5
+
+1 ]=> (tyler-fib 10)
+
+;Value: 55
+
+1 ]=> (define (fib n)
+  (fib-iter 1 0 n))
+
+;Value: fib
+
+1 ]=> (define (fib-iter a b count)
+  (if (= count 0)
+      b
+      (fib-iter (+ a b) a (- count 1))))
+
+;Value: fib-iter
+
+1 ]=> (fib 3)
+
+;Value: 2
+
+1 ]=> (fib 5)
+
+;Value: 5
+
+1 ]=> (fib 10)
+
+;Value: 55
+
+1 ]=> (fib 5)
+
+;Value: 5
+
+1 ]=> (fib 10)
+
+;Value: 55
+
+1 ]=> (tyler-fib 3)
+
+;Value: 2
+
+1 ]=> 
+
+I was getting a little mixed up about how fib worked.
+
+Now that I've been calculating it in WA it makes more sense to me.  I think I was a little mixed up with factorial
+
+
+
+

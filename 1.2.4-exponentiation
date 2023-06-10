@@ -1,0 +1,56 @@
+b^n = b * b^n-1
+
+b0 = 1
+
+(define (expt b n)
+  (if (= n 0)
+      1
+      (* b (expt b (- n 1)))))
+
+for rec, this would be n steps, on per n, and then n space, one per n
+
+or iterative
+
+let's design the iterative
+
+(
+    define 
+       (exp b n)
+       (exp-iter b n 1)
+)
+
+(
+    define
+        (exp-iter b counter product)
+        (
+            if (= counter 0)
+            product
+            (
+                exp-iter b (- counter 1) (* b product)
+            )
+        )
+)
+
+this is n steps, but constant space
+
+we can get it to be in O(log(n)) by mucking with the math a bit
+
+b^n = (b^(n/2))^2 for even
+b^n = b * b^n-1 for odd
+
+(define (even? n)
+  (= (remainder n 2) 0))
+
+(
+    define 
+        fast-expt b n
+        (
+            cond
+                ((= n 0) 1)
+                ((even? n) (square (fast-exp b (/ n 2))))
+                (else (* b (fast-exp b (- n 1))))
+        )
+)
+
+
+

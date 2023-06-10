@@ -1,0 +1,21 @@
+(define (cube x) (* x x x))
+
+we already know that procedures are abstractions of operations we 
+want to run through in different instances.
+
+(* 3 3 3)
+(* x x x)
+(* y y y) 
+
+we could repeat operations constantly and never abstract, but
+abstracting saves time and saves us from operating at the base
+level everywhere in our code.
+
+But there is something hidden here. If we're only ever capable
+of using simple variables like strings and numbers, we'd still be
+caught repeating more macro-scopic patterns constantly
+
+If you treat the pattern as more of a concept, you come to HOPs
+
+we're going to start constructing procedures out of procedures
+
