@@ -1,0 +1,62 @@
+Alright back into the depths lol.
+
+Although this is just fractions I should be able to grok this fast.
+
+We need a way to make a rational number, rat.  
+
+We need a way to select the numerator or denominator.
+
+<n> numerator.
+<d> denominator.
+
+(make-rat <n> <d>) -> x
+
+(numer x) -> <n>
+
+(denom x) -> <d>
+
+We don't have the data structure yet.
+
+So we'll learn our first structure, a pair.
+
+(define x (cons 1 2))
+
+(car x) -> 1
+
+(cdr x) -> 2
+
+so let's write our abstract functions above without looking using pairs.
+
+(define (make-rat n d) (cons n d))
+
+(define (numer x) (car x))
+
+(define (denom x) (cdr x))
+
+(define (print-rat x)
+  (newline)
+  (display (numer x))
+  (display "/")
+  (display (denom x)))
+
+  (define (add-rat x y)
+  (make-rat (+ (* (numer x) (denom y))
+               (* (numer y) (denom x)))
+            (* (denom x) (denom y))))
+(define (sub-rat x y)
+  (make-rat (- (* (numer x) (denom y))
+               (* (numer y) (denom x)))
+            (* (denom x) (denom y))))
+(define (mul-rat x y)
+  (make-rat (* (numer x) (numer y))
+            (* (denom x) (denom y))))
+(define (div-rat x y)
+  (make-rat (* (numer x) (denom y))
+            (* (denom x) (numer y))))
+(define (equal-rat? x y)
+  (= (* (numer x) (denom y))
+     (* (numer y) (denom x))))
+
+
+
+

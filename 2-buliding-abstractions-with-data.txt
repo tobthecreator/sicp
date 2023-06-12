@@ -1,0 +1,56 @@
+The focus of chapter one was building procedures, and the compounding them together through abstraction.
+
+In chapter two we're now going to do the same with data.
+
+When we can abstract complexity, we can elevate the conceptual level at which we can design.
+
+Fuck I like that phrasing. Idk why that hit me so hard.
+
+"
+(1) to elevate the conceptual level at which we can design our programs,
+(2) to increase the modularity of our designs and
+(3) to enhance the expressive power of our language.
+
+We're about to dive into rational numbers so I'm going to do a refresher sidebar.
+
+I realized that my mind going numb as I was working on stuff in chapter one was mostly
+me not caring enough to do the work to either perform the math myself and see  the patterns,
+or just care enough to refresh.  Going to fix that moving forward.
+
+A rational number is any number that can be written as a fraction, 
+where both numbers are integers and the denominator is not zero.
+
+A number is rational if p and q are integers, and q != 0
+
+The progression goes
+-> natural numbers 1 2 3 4 5 6...
+-> whole numbers 0 1 2 3 4 5 6...
+-> integers -2 -1 0 1 2 3 4 5 6...
+-> rational numbers
+
+In turn, any number that does not meet the definition of a rational number is irrational.
+
+So when we're dealing with rational numbers, we're dealing with fractions.
+
+Imagine building a procedure to handle rational numbers without having a concept of a rational number in your code.
+
+Everything would have to carefully handle the num and denom separately.  Huge pain.
+
+Being able to compound data, abstract the idea of a rational number into a new piece of data, allows
+us to build functions that speak directly to that data, making things a lot easier.
+
+When you abstract, you create an "abstraction barrier" between parts of your program.
+
+We should be able to combine not only primitive data, but complex data. This is closure.
+
+We should also be able to compound data objects should be able to serve as interfaces between modules.
+
+These both get broken down in this chapter.
+
+We'll hit some data structures and then generics.
+
+This book is so interesting. I feel like it's teaching me the basics of all of all these things
+that in theory I should've learned a long time ago, but missed in ECE or lack of on the job training.
+
+
+

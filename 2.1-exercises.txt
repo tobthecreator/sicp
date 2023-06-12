@@ -1,0 +1,215 @@
+Exercise 2.1.  
+Define a better version of make-rat that handles 
+both positive and negative arguments. 
+Make-rat should normalize the sign so that 
+if the rational number is positive, 
+both the numerator and denominator are 
+positive, and if the 
+rational number is negative, 
+only the numerator is negative.
+
+Okay so this is what they left us, whcih simplifies it down to by GCD.
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b)))
+      )
+
+
+(
+    define (make-rat n d)
+    (
+        let (
+            (g (gcd n d))
+        )
+        (cons (/ n g) (/ d g))
+    )
+)
+
+I'm going to take it back to a simpler version and then plug this in.
+
+(
+    define 
+    (
+        make-rat n d
+    ) 
+    (
+        cons n d
+    )
+)
+
+so this is what we originally had.
+
+If both are positive, they're both positive. If it's negative. Only numerator is negative.
+
+so let's think that through. we have four cases.
+1. both are positive. -> no action.
+2. both are negative. -> both positive.
+3. numerator positive, denominator negative. -> numerator negative, denominator positive
+4. numerator negative, denominator positive. -> no action.
+
+so that's a lot easier to test for. because there are only two cases where we need to act.
+
+In both cases, we can just take the absolute value of the denominator.
+
+--
+okay first i need to experiment for a sec with internal procedures
+and variable declaration.
+
+(
+    define 
+    (f x y)
+    (
+        define 
+        (f-helper a b)
+        (
+            + (* x (square a))
+            (* y b)
+            (* a b)
+        )
+    )
+    (
+        f-helper 
+            (+ 1 (* x y)) 
+            (- 1 y)
+    )
+)
+
+(
+    define (make-rat-2 n d)
+    (
+        define (abs x) (if (< x 0) (- x) x)
+    )
+    (
+        let 
+            (
+                (test (abs d))
+            )
+            (
+                (+ n d test)
+            )
+    )
+)
+
+// ^ not working
+
+(
+    define (make-rat-2 n d)
+    (
+        define (abs x) (if (< x 0) (- x) x)
+    )
+    (
+        let 
+            (
+                (test (abs d))
+            )
+            (+ n test)
+    )
+)
+
+--
+
+(define (abs x)
+  (if (< x 0)
+      (- x)
+      x))
+
+(
+    define (make-rat n d)
+    (
+        define (abs x) (if (< x 0) (- x) x)
+    )
+    (
+        define (gcd a b) (if (= b 0) a (gcd b (remainder a b)))
+    )
+    (
+        define (opt-make-rat n d) (cons n d )
+    )
+    (
+        define 
+        (normalize n d) 
+        (
+            cond ((and (< n 0)) )
+        )
+    )
+    (
+        define (resize rat) (
+             (
+                let (
+                    (n car rat)
+                    (d cdr rat)
+                    (g (gcd n d))
+                )
+                (cons (/ n g) (/ d g))
+            )
+        )
+    )
+    (
+        let 
+            (
+                (test (abs d))
+            )
+            (+ n test)
+    )
+)
+
+(
+    define (make-rat n d)
+    (
+        define (abs x) (if (< x 0) (- x) x)
+    )
+    (
+        define (gcd a b) (if (= b 0) a (gcd b (remainder a b)))
+    )
+    (
+        define (normalize-numer n d) ( if (< (* n d) 0) (- (abs n)) (abs n))
+    )
+    (
+        define (shrink-by-gcd n d) (
+            let (
+                (g (gcd n d))
+            )
+            (cons (/ n g) (/ d g))
+        )
+    )
+    (
+        let (
+            (normalized-n (normalize-numer n d))
+            (normalized-d (abs d))
+        )
+        (
+            shrink-by-gcd normalized-n normalized-d
+        )
+    )
+)
+
+;Value: make-rat
+
+8 error> (make-rat 4 5)
+
+;Value: (4 . 5)
+
+8 error> (make-rat 80 100)
+
+;Value: (4 . 5)
+
+8 error> (make-rat -4 5)
+
+;Value: (-4 . 5)
+
+8 error> (make-rat 4 -5)
+
+;Value: (-4 . 5)
+
+8 error> (make-rat -4 -5)
+
+;Value: (4 . 5)
+
+8 error> 
+
+BOOM fucking got it.  That was cool. Learned a lot about let and sub procedures in that one.
+
+How did the big MIT boys do it?  They, as expected did a lot of clever stuff.
+
+I still like mine though, because it treats this as a pipeline. (1) get the signs right. (2) shrink if possible.
+
