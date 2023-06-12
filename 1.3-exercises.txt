@@ -14,3 +14,5 @@ where h = (b - a)/n, for some even integer n, and yk = f(a + kh).
  of the integral procedure shown above.
 
 
+
+

@@ -1,0 +1,21 @@
+We can think of data as some collection of selectors and constructors,
+together with specified conditions that these procedures must fulfill in order to
+be a valid represenation.
+
+That's very interesting.
+
+A piece of data is only as good as it's ability to be used, and to fit a specific mold.
+
+They actually did this.  They didn't define what a pair was and how it worked, 
+just showed us the methods and let us play from there.
+
+The functions we were given were language primitives. But we could overwrite them
+ourselves if we dared.
+
+This way of thinking about data does not come naturally. 
+
+But in theory you only need to be able to run a pairs operation on something
+and see the output to know if it's a valid pair or not.
+
+So what we're saying is basically
+- 

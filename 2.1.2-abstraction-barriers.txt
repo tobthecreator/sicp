@@ -1,0 +1,46 @@
+The book is bringing up the point that
+in theory we can write the gcd
+equation to be done whenever, at 
+construction of the pair or at the selection of that data later.
+
+Let's look for the asbtraction layers in what we've just done.
+
+(0) the layer of how pairs are implemented
+--- cons car cdr --- is the api layer
+(1) rational numbers are pairs
+--- make-rat numer denom ---
+(2) rational numbers as numerators and denominators
+--- add-rat sub-rat ---
+(3) rational numbers in the problem domain
+--- programs that use rat numbers ---
+
+
+did this kind of backwards.
+
+Either way, we can see that there is an API layer that abstracts more complex 
+functionality below.
+
+Think about this in terms of libraries.
+
+I have a math library. It has to work with rational numbers.
+
+I have add-rat, sub-rat, etc. I don't care how they're implemented.  
+They're in the rational numbers module.  
+
+But just like I don't care how they're implemented. make-rat, numer and denom
+don't care how cons/car/cdr are implemented by the pairs library.
+
+make-rat is our constructor. numer and denom are our selectors.
+
+Where you put things is determined by your typical use case.
+
+If you're accessing the numerators and denomators many times, calculate it at construction.
+
+If not, maybe save the time and calculate it as needed.
+
+We can change all of this at any time, but the module above, the add-rat sub-rat, whatever doesn't notice at all.
+
+That's a good abstraction layer.
+
+In some ways, abstraction also let's you DELAY design choices, because they're easy to come and slot back into place.
+
