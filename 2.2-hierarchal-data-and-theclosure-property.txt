@@ -1,0 +1,27 @@
+The pairs we've been playing with we'll call 
+box-and-pointers
+
+The car is the pointer to the value, the cdr
+
+We can cosntruct arbitrarily large sets of data that we can
+then navigate, where the cdr is the pointer to another cdr, and so on
+
+In general, an operation for combining data objects
+satisfies the closure property if the results
+of combining things with that operation can 
+themselves be combined using the same operation
+
+So I can combine two primitives into a pair.
+
+But I can also combine two pairs into a pair with the
+same op.
+
+That satisfies the property.
+
+Closure is the key power in any means of combination
+because it permits us to create hierarchal structures.
+
+Structures that are made up of parts, which themselves are made up of parts, etc.
+
+Let's dig in. I know this is going to fuck with my brain today.
+

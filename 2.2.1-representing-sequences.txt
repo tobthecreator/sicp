@@ -1,0 +1,79 @@
+Oo we just got introduced to 'nil'
+
+We're goign to build a sequence.
+-> an ordered collection of data objects.
+
+(
+    cons 1
+        ( 
+            cons 2 
+            (
+                cons 3
+                (
+                    cons 4 nil ; end of line
+                )
+            )
+        )
+)
+
+Such a squence of paris is called a list.
+
+We have a primitive for a list in Scheme. How nice of them.
+
+(list <a1> <a2> ... <an>)
+
+(cons <a1> (cons <a2> (cons ... (cons <an> nil) ...)))
+
+1 ]=> (list 1 2 3 4)
+
+;Value: (1 2 3 4)
+
+1 ]=> 
+
+1 ]=> (define one-through-four (list 1 2 3 4)
+)
+
+;Value: one-through-four
+
+1 ]=> one-through-four
+
+;Value: (1 2 3 4)
+
+1 ]=> 
+
+Lists are zero indexed!
+
+We're given a stdlib for list ops.
+
+list-ref is the first.
+
+(list-ref <list> <n>)
+
+We now also get introduced to "null?" which tests
+if the argument is empty.  The procedure "length" gives us the number of items too.
+
+alrighty back to exercises.
+
+mapping
+
+(define (map proc items)
+  (if (null? items)
+      nil
+      (cons (proc (car items))
+            (map proc (cdr items)))))
+(map abs (list -10 2.5 -11.6 17))
+(10 2.5 11.6 17)
+(map (lambda (x) (* x x))
+     (list 1 2 3 4))
+(1 4 9 16)
+
+Map provides an abstraction barrier between the procedure to be
+performed on an element and how those elements are fetched.
+
+I realized this the other day while trying to figure out lambdas,
+when I realized that I basically use them all the time in 
+JS when using map/filter/etc
+
+
+
+
