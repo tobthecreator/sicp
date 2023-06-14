@@ -1,0 +1,70 @@
+Reminder
+
+data abstractino lets us design programs without
+becoming enmeshed in the details of how that data is represented
+
+abstraction preserves for us the flexibility to experiment with altnerative
+representations under the hood
+
+Now we're going to talk about "Conventional interfaces"
+
+When we first learned about HOPs we were capturing common
+patterns in programs that were dealing with math.
+
+We abstracted those functions
+
+They bring up a thing here called signal-flow plans for procedures.
+
+Let's break down the last exercises that way.
+
+We enumerate all the leaves
+square them
+accumulate them in a list and return
+
+signal flow looks like this
+
+enumerate -> filter -> accumulate
+
+their example is
+
+enumerate -> map -> filter -> accumulate
+
+We're going to "learn to organize our programs in a way
+that make the signal-flow structure manifest in the procedures we write"
+
+and this will "increase conceptual clarity"
+
+I think in JS we're justing getting into
+
+.map, .filter, and chaining
+
+but it is interesting to think about that in the concept of a tree?
+
+(map square (list 1 2 3 4 5))
+(1 4 9 16 25)
+
+they build up the map, fitler and accumulate stuff
+
+it's funny, i think I know where they're going - allowing sequences of operations - but
+that has become so natural to programming now that I have trouble
+solving some of the problems in the book without it.
+
+(define (even-fibs n)
+  (accumulate cons
+              nil
+              (filter even?
+                      (map fib
+                           (enumerate-interval 0 n)))))
+
+
+in this we're running in reverse order. enumerate first, which is an arg to map which is an arg to filter which is an arg to aggretage
+
+The value here is that the program becomes more modular.
+
+Designs are constructed from independent pieces coming together
+
+at some point they're going to drop the bomb that
+we can put functions into a list, and then iterate through those functions on the same input
+
+
+

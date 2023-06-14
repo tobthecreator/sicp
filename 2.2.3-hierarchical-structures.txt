@@ -1,0 +1,42 @@
+(list 1 (list 2 (list 3 4)))
+
+;Value: (1 (2 (3 4)))
+
+skipping exercises
+
+We're just translating what we talked about earlier into trees from the diagrams
+
+You can treat a tree as 
+a bunch of subtrees
+
+then you can map over subtrees
+
+(define (scale-tree tree factor)
+  (cond ((null? tree) nil) ; if there is no further tree, then stop
+        ((not (pair? tree)) (* tree factor)) ; if you're not a tree yourself, then base case
+        (else (cons (scale-tree (car tree) factor) ; otherwise make a tree out of both parts of your pairing
+                    (scale-tree (cdr tree) factor)))))
+(scale-tree (list 1 (list 2 (list 3 4) 5) (list 6 7))
+            10)
+
+(define (scale-tree tree factor)
+  (
+    map ; for every item in this list
+        (
+            lambda (sub-tree) ; treat each list item as a tree
+            (
+                if (pair? sub-tree) ; if that is a pair
+                (scale-tree sub-tree factor) ; then scale it like it's own tree
+                (* sub-tree factor) ; otherwise, base case
+            )
+        )
+        tree
+    )
+)
+
+important thing to note that pair applies to lists
+
+I gotta admit that that is kind of beautiful
+
+It does depend completely on being written the way it is, but the form doesn't
+

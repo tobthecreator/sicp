@@ -209,3 +209,93 @@ lambdas can also do the same thing?
 )
 
 (for-each (lambda (x) (display x)) (list 1 2 3 4))
+
+Excerise 2.25
+(car (cdr (car (cdr ( cdr a)))))
+(car (car a))
+car then cdr 6 times?
+
+Exercise 2.26. 
+(define x (list 1 2 3))
+(define y (list 4 5 6))
+
+What do I think they're going to be?
+
+(1 2 3 4 5 6)
+((1 2 3) (4 5 6))
+((1 2 3) (4 5 6))
+
+3 error> (define x (list 1 2 3))
+
+;Value: x
+
+3 error> (define y (list 4 5 6))
+
+;Value: y
+
+3 error> (append x y)
+
+;Value: (1 2 3 4 5 6)
+
+3 error> 
+(cons x y)
+
+;Value: ((1 2 3) 4 5 6)
+
+3 error> (list x y)
+
+;Value: ((1 2 3) (4 5 6))
+
+3 error>  
+
+skipping back
+
+Exercise 2.30.  
+Define a procedure square-tree analogous to the square-list procedure of exercise 2.21. 
+That is, square-list should behave as follows:
+(square-tree
+ (list 1
+       (list 2 (list 3 4) 5)
+       (list 6 7)))
+(1 (4 (9 16) 25) (36 49))
+
+5 error> (define (crawl-square-tree t)
+  (define (base-case x) (* x x))
+  (define (is-leaf x) (not (pair? x)))
+  (if (is-leaf t)
+      (base-case t)
+      (map (lambda (subtree)
+             (crawl-square-tree subtree))
+           t)))
+
+;Value: crawl-square-tree
+
+5 error> (crawl-square-tree test-list)
+
+;Value: (1 (4 (9 16) 25) (36 49))
+
+5 error> 
+
+Exercise 2.31.  Abstract your answer to exercise 2.30 to produce a procedure tree-map with the property that square-tree could be defined as
+
+(define (square-tree tree) (tree-map square tree))
+
+(define (tree-map proc t)
+  (define (base-case x) (proc t))
+  (define (is-leaf x) (not (pair? x)))
+  (if (is-leaf t)
+      (base-case t)
+      (map (lambda (subtree)
+             (crawl-square-tree subtree))
+           t)))
+       
+(define (square x) (* x x))
+
+not the bad since I already wrote it to be abstracted for myself.
+Exercise 2.32.  We can represent a set as a list of distinct elements, and we can represent the set of all subsets of the set as a list of lists. For example, if the set is (1 2 3), then the set of all subsets is (() (3) (2) (2 3) (1) (1 3) (1 2) (1 2 3)). Complete the following definition of a procedure that generates the set of subsets of a set and give a clear explanation of why it works:
+
+(define (subsets s)
+  (if (null? s)
+      (list nil)
+      (let ((rest (subsets (cdr s))))
+        (append rest (map <??> rest)))))
