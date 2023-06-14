@@ -3,3 +3,7 @@ lol very short section.
 We're still playing around with numbers.
 
 Let's start working with arbitrary symbols as data.
+
+I will take notes on all of 2.3 as I come back to it.
+
+otherwise it's just kinda reiterating in a way I don't find very interesting.

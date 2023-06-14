@@ -1,0 +1,136 @@
+the general strategy for checking the datum
+and calling the relevant procedure is
+
+"dispatching on type"
+
+just a switch case statement.  But maybe that's where switch get's it's name
+
+
+I wonder if you could build a switch in lisp?
+
+you already have cond which is basically the same thing
+
+our generics impl has two weaknesses
+- generics must know all the implementations
+- individual representations systems cannot share names or overlap. so even if designed separately, their designs still fuck with eachother.
+
+These weaknesses exist because generic interfaces above were not additive
+
+You have to update the generics everytime a new implementation is introduced.
+
+The changes are straightforward, but still
+
+ahhh i can start to see OOP sneak into my brain slowly for the first time.
+
+we're not going to get to this, but i can see where OOP started now.
+
+I have some arbitrary set of Complex number representations
+
+I say "hey here is this system's design of Complex numbers, implement this however you want, but fill this space"
+
+And then you write "rectangular implements Complex" and "polar implements Complex"
+
+and then some function off in the while just adds them together, calling .add() and the rest works
+
+That's not what we're going to get into here I imagine. just trying to think ahead.
+
+--
+
+okay so they've now labeled a table
+
+on the y axis rows you have the generic operations
+
+on the x axis columns you have the different modules polar and rectangualr, and their corresponding functions
+
+oh now things are gettings spicy, they just used the word "package" for the first time
+
+(define (install-rectangular-package)
+  ;; internal procedures
+  (define (real-part z) (car z))
+  (define (imag-part z) (cdr z))
+  (define (make-from-real-imag x y) (cons x y))
+  (define (magnitude z)
+    (sqrt (+ (square (real-part z))
+             (square (imag-part z)))))
+  (define (angle z)
+    (atan (imag-part z) (real-part z)))
+  (define (make-from-mag-ang r a) 
+    (cons (* r (cos a)) (* r (sin a))))
+  ;; interface to the rest of the system
+  (define (tag x) (attach-tag 'rectangular x))
+  (put 'real-part '(rectangular) real-part)
+  (put 'imag-part '(rectangular) imag-part)
+  (put 'magnitude '(rectangular) magnitude)
+  (put 'angle '(rectangular) angle)
+  (put 'make-from-real-imag 'rectangular 
+       (lambda (x y) (tag (make-from-real-imag x y))))
+  (put 'make-from-mag-ang 'rectangular 
+       (lambda (r a) (tag (make-from-mag-ang r a))))
+  'done)
+
+put, here is a procedure that puts things into the table
+
+also, internal procedures! and then public procedures!
+
+(define (install-polar-package)
+  ;; internal procedures
+  (define (magnitude z) (car z))
+  (define (angle z) (cdr z))
+  (define (make-from-mag-ang r a) (cons r a))
+  (define (real-part z)
+    (* (magnitude z) (cos (angle z))))
+  (define (imag-part z)
+    (* (magnitude z) (sin (angle z))))
+  (define (make-from-real-imag x y) 
+    (cons (sqrt (+ (square x) (square y)))
+          (atan y x)))
+  ;; interface to the rest of the system
+  (define (tag x) (attach-tag 'polar x))
+  (put 'real-part '(polar) real-part)
+  (put 'imag-part '(polar) imag-part)
+  (put 'magnitude '(polar) magnitude)
+  (put 'angle '(polar) angle)
+  (put 'make-from-real-imag 'polar
+       (lambda (x y) (tag (make-from-real-imag x y))))
+  (put 'make-from-mag-ang 'polar 
+       (lambda (r a) (tag (make-from-mag-ang r a))))
+  'done)
+
+  (define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+          (apply proc (map contents args))
+          (error
+            "No method for these types -- APPLY-GENERIC"
+            (list op type-tags))))))
+
+(define (real-part z) (apply-generic 'real-part z))
+(define (imag-part z) (apply-generic 'imag-part z))
+(define (magnitude z) (apply-generic 'magnitude z))
+(define (angle z) (apply-generic 'angle z))
+
+And now if we have a new representation to think about, we just
+"install" the "package" of it and apply-generic takes care of the rest,
+as long as it behaves with the rules
+
+(define (make-from-real-imag x y)
+  (define (dispatch op)
+    (cond ((eq? op 'real-part) x)
+          ((eq? op 'imag-part) y)
+          ((eq? op 'magnitude)
+           (sqrt (+ (square x) (square y))))
+          ((eq? op 'angle) (atan y x))
+          (else
+           (error "Unknown op -- MAKE-FROM-REAL-IMAG" op))))
+  dispatch)
+
+This second alternative style is called "message passing"
+
+We've seen this before, when we did that mental fuckery excercise 
+of defining cons/car/cdr using only procedures.
+
+There it was a math trick, but here it's useful technique.
+
+Message passing comes back in chapter 3, where we'll see it used in simulations.
+

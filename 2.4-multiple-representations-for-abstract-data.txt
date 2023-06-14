@@ -1,0 +1,52 @@
+by isolating the representation of data objects, 
+we can divide the task of designing a large program
+into smaller tasks to perform separately
+
+But we can make it more powerful.
+
+Of course we can!
+
+At this point I have no limits left for this book to break lol
+
+It's not always helpful to speak of 
+"the underlying representation of a data object"
+
+we might like to make a system that 
+can deal with multiple representations
+
+Think about complex numbers
+They have rectangular form and polar form.
+
+It's perfectly imaginable to have a system where both are used
+
+It is hard to conceive of all design choices
+during your first build.  Same for data representation.
+
+So we need a way to isolate design choices from eachother,
+but also data representation choices.
+
+These systems need to work additevely, so we don't have to redesign existing work.
+
+This is where we start to get into generics.
+
+Generics, here, are "procedures that can operate on data that are represented in more than one way"
+
+We'll give objects "type tags", info about what they are
+
+This brings about dicussions on data-directed programming
+
+So we'll have one layer
+
+--
+complex numbers
+- add
+- sub
+- mul
+- div
+--
+but below that we'll have two modules
+
+rectangular | polar
+--
+
+

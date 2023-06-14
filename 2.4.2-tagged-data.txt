@@ -1,0 +1,45 @@
+we're getting into the "principle of least commitment"
+
+So now we have to design a tagging system.
+
+it'll be a pair (<tag> <contents>)
+
+So we define the constructor.
+
+(define (attach-tag tag contents) (cons tag contents))
+(
+    define (tag x) 
+    (
+        if (pair? x)
+        (car x)
+        (error "Bad tagged x -- TYPE-TAG" datum)
+    )
+)
+
+(
+    define (contents x)
+    (
+        if (pair? x)
+        (cdr x)
+        (error "Bad tagged datum -- CONTENTS" datum)
+    )
+)
+
+(define (rectangular? z)
+  (eq? (type-tag z) 'rectangular))
+
+(define (polar? z)
+  (eq? (type-tag z) 'polar))
+
+and then folks use these to tag their data
+
+in our tier one implementations we can then check to see which one to implement
+
+(define (add-complex z1 z2)
+  (make-from-real-imag (+ (real-part z1) (real-part z2))
+                       (+ (imag-part z1) (imag-part z2))))
+
+so stuff like this still works, because real-part, etc just checks the tags
+
+In theory we could also check tags and always return the part that we were given if we really cared.
+
